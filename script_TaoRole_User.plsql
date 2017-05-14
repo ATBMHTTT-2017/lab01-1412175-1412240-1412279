@@ -51,14 +51,11 @@ create user nv18 identified by nv18 DEFAULT TABLESPACE users
 
 --CAP QUYEN CHO YEU CAU SO 3---
 --Tao thu nv3 thay cho nv03 de kiem tra phan quyen
-create user nv3 identified by nv3 DEFAULT TABLESPACE users 
-TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
-
 
 -- nv3 la truong phong nen gan quyen truongphong cho nv3  
-grant truongphong to nv3;
-grant create session to nv3;
-alter user nv3 default role truongphong;
+grant truongphong to nv03;
+grant create session to nv03;
+alter user nv03 default role truongphong;
 -- cap quyen select, insert, update cho truongphong
 grant insert,update,select on admin.duan to truongphong;
 
@@ -95,6 +92,59 @@ where da.PHONGCHUTRI=pb.MAPHONG
     
 -- CAP QUYEN CHO GIAMDOC TREN VIEW NAY
 grant SELECT on "ADMIN"."THONGTIN_DUAN" to "GIAMDOC" ;
+
+
+
+
+-- 12/5/2017 SU DUNG CO CHE VPD
+
+
+-- yeu cau 5 ----- ta chia nho thanh 2 chinh sach ung voi 2 ham duoi day
+-- 1. ham de moi nhan vien chi xem duoc thong tin luong cua minh
+create or replace function xemLuong(p_schema in varchar2,p_obj in varchar2)
+return varchar2
+as
+  user varchar2(100);
+BEGIN
+  user:=concat('''',SYS_CONTEXT('userenv','SESSION_USER'));
+  user:=concat(user,'''');
+  return 'maNV='||lower(user); 
+END;
+--gan chinh sach 1 theo ham nay
+execute DBMS_RLS.ADD_POLICY(
+          object_schema => 'admin',
+          object_name => 'nhanvien',
+          policy_name => 'sec_Luong',
+          policy_function => 'xemLuong',                  
+          statement_types => 'select,update,insert',
+          update_check=> TRUE
+  );
+
+----2. ham de moi nhan vien chi xem duoc nhan vien cung phong ban
+create or replace function xemNhanvien(p_schema in varchar2,p_obj in varchar2)
+return varchar2
+as
+PRAGMA AUTONOMOUS_TRANSACTION;
+usera VARCHAR2(10);
+mphong number;
+temp VARCHAR2(20);
+BEGIN
+  usera:=SYS_CONTEXT('userenv','SESSION_USER');
+  usera:=lower(usera);
+  SELECT nv.maphong INTO mphong FROM ADMIN.NHANVIEN nv WHERE nv.manv=usera;
+temp := 'maPhong =' ||TO_CHAR(mphong);
+RETURN temp;
+END;
+--gan ham chinh sach
+execute DBMS_RLS.ADD_POLICY(
+          object_schema => 'admin',
+          object_name => 'nhanvien',
+          policy_name => 'sec_Nhanvien',
+          policy_function => 'xemNhanvien'            
+  );
+
+
+
 
 
 
