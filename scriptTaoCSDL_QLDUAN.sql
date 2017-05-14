@@ -384,10 +384,11 @@ create user nv18 identified by nv18 DEFAULT TABLESPACE users
  )
  as 
  mPhong number;
- usera varchar2(5);
+ usera varchar2(10);
  
  begin
- usera := SYS_CONTEXT('userenv','SESSIONUSER'); 
+ usera := SYS_CONTEXT('userenv','SESSION_USER'); 
+ usera:=LOWER(usera);
  select nhanvien.maPhong into mPhong from nhanvien where maNV = usera ;
  
  update phongban
@@ -398,10 +399,31 @@ create user nv18 identified by nv18 DEFAULT TABLESPACE users
  phongban.chiNhanh = in_chinhanh
  where phongban.maPhong=mPhong ;
 end;
+ 
 
 -----------------
 grant execute on update_phong_ban to truongphong
 grant execute on update_phong_ban to truongchinhanh
+
+grant select on nhanvien
+
+as
+usera VARCHAR2(10);
+mphong number;
+BEGIN
+      IF(SYS_CONTEXT(‘userenv’, ‘SESSION_USER’)= ‘ADMIN’)
+      THEN 
+          Return “”;
+      ELSE
+         BEGIN
+           user:=SYS_CONTEXT(‘userenv’,’SESSION_USER’);
+           SELECT maPhong INTO mphong 
+                          FROM nhanvien
+                          WHERE maNV=usera;
+           RETURN 'maPhong =' || mphong;
+         END
+      END IF;
+END;
 
 
  
