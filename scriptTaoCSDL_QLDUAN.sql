@@ -405,7 +405,6 @@ end;
 grant execute on update_phong_ban to truongphong
 grant execute on update_phong_ban to truongchinhanh
 
-grant select on nhanvien
 
 as
 usera VARCHAR2(10);
