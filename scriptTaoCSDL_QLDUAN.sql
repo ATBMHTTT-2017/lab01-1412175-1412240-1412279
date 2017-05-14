@@ -375,27 +375,29 @@ create user nv18 identified by nv18 DEFAULT TABLESPACE users
  
  create or replace procedure update_phong_ban
  (
-	tenphong in varchar2,
-	truongphong in varchar2,
-	ngaynhanchuc in  date,
-	sonhanvien in number,
-	chinhanh in number,
+	in_tenphong in varchar2,
+	in_truongphong in varchar2,
+	in_ngaynhanchuc in  date,
+	in_sonhanvien in number,
+	in_chinhanh in number
  
  )
  as 
  mPhong number;
- usera varchar2;
+ usera varchar2(5);
+ 
  begin
  usera := SYS_CONTEXT('userenv','SESSIONUSER'); 
- select nhanvien.maPhong into mPhong from nhanvien where maNV = usera;
+ select nhanvien.maPhong into mPhong from nhanvien where maNV = usera ;
+ 
  update phongban
- set phongban.tenPhong = tenphong,
- phongban.truongPhong= truongphong,
- phongban.ngayNhanChuc= ngaynhanchuc,
- phongban.soNhanVien = sonhanvien,
- phongban.chiNhanh = chinhanh
- where phongban.maPhong=mPhong;
-end update_phong_ban;
+ set phongban.tenPhong = in_tenphong,
+ phongban.truongPhong= in_truongphong,
+ phongban.ngayNhanChuc= in_ngaynhanchuc,
+ phongban.soNhanVien = in_sonhanvien,
+ phongban.chiNhanh = in_chinhanh
+ where phongban.maPhong=mPhong ;
+end;
 
 -----------------
 grant execute on update_phong_ban to truongphong
