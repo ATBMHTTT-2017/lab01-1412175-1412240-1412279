@@ -406,23 +406,47 @@ grant execute on update_phong_ban to truongphong
 grant execute on update_phong_ban to truongchinhanh
 
 
+
+ ------ truong du an nv06,nv09,nv12,nv15,nv18
+ 
+grant truongduan to nv06;
+
+grant truongduan to nv09;
+
+grant truongduan to nv12;
+
+grant truongduan to nv15;
+
+grant truongduan to nv18;
+
+grant select,insert,update,delete on chitieu to truongduan;
+
+
+
+ ------tao function policy  Tr??ng d? án ch? ???c phép ??c, ghi thông tin chi tiêu c?a d? án mình qu?n lý (VPD).
+ 
+create or replace function vpd_chitieu(p_schema in varchar2,p_obj in varchar2)
+return varchar2
 as
-usera VARCHAR2(10);
-mphong number;
+  usera varchar2(100);
+  temp varchar2(100);
 BEGIN
-      IF(SYS_CONTEXT(‘userenv’, ‘SESSION_USER’)= ‘ADMIN’)
-      THEN 
-          Return “”;
-      ELSE
-         BEGIN
-           user:=SYS_CONTEXT(‘userenv’,’SESSION_USER’);
-           SELECT maPhong INTO mphong 
-                          FROM nhanvien
-                          WHERE maNV=usera;
-           RETURN 'maPhong =' || mphong;
-         END
-      END IF;
+    usera:= SYS_CONTEXT('userenv','SESSION_USER');
+    usera:=lower(usera);
+    temp:= ' duAn IN (select duan.maDA from duan where duan.truongDA=' || usera || ')';
+    return temp; 
 END;
+begin
+dbms_rls.add_policy (object_schema => 'khanhbui1412240',
+object_name => 'chitieu',
+policy_name => 'my_chitieu',
+function_schema => 'khanhbui1412240',
+policy_function => 'vpd_chitieu',
+statement_types => 'select, update, insert,delete',
+update_check => TRUE );
+end;
+
+
 
 
  
