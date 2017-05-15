@@ -187,6 +187,12 @@ insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv18','Trần Tiến Quận','Phạm gia V Quận 4-TP. HCM','09383245631','', 15,5, 6000000);
 
+			--them 2 nhan vien binh thuong vao de test yeu cau so 4 
+insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
+			values('nv19','Trần Tiến Quận B','Phạm gia V Quận 4-TP. HCM','09383245631','', 15,5, 2000000);
+insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
+			values('nv20','Trần Tiến Quận C','Phạm gia V Quận 4-TP. HCM','09383245631','', 15,5, 500000);
+
 
 --- bổ sung khóa ngoại sau khi insert vào bảng NhanVien
 alter table chinhanh

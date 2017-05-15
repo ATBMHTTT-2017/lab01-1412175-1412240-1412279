@@ -47,19 +47,33 @@ create user nv16 identified by nv16 DEFAULT TABLESPACE users
 create user nv17 identified by nv17 DEFAULT TABLESPACE users 
           TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
 create user nv18 identified by nv18 DEFAULT TABLESPACE users 
-          TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;         
+          TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
+create user nv19 identified by nv19 DEFAULT TABLESPACE users 
+          TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
+create user nv20 identified by nv20 DEFAULT TABLESPACE users 
+          TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users; 
 
 --CAP QUYEN CHO YEU CAU SO 3---
---Tao thu nv3 thay cho nv03 de kiem tra phan quyen
-
--- nv3 la truong phong nen gan quyen truongphong cho nv3  
-grant truongphong to nv03;
+-- cap quyen dang nhap cho user khi can kiem tra
 grant create session to nv03;
-alter user nv03 default role truongphong;
--- cap quyen select, insert, update cho truongphong
-grant insert,update,select on admin.duan to truongphong;
+grant create session to nv18;
+grant create session to nv19;
+grant create session to nv20;
 
--- GIAI DOAN 2--  9/5/2017----TIEP TUC LAM BAI----
+
+
+-- Cap role cho user khi can kiem tra ket qua
+grant truongphong to nv03;
+grant truongphong to nv18;
+grant nhanvien to nv19;
+grant nhanvien to nv20;
+
+
+--CAP QUYEN CHO ROLE KHI MUON CAI DAT CHINH SACH
+grant insert,update,select on admin.duan to truongphong;
+grant select on admin.nhanvien to truongphong;
+grant select on admin.nhanvien to nhanvien;
+-- GIAI DOAN 2--  9/5/2017-- cai dat cac chinh sach bao mat ap dung cac co che da hoc
 -- YEU CAU 4: DANH CHO GIAMDOC
 -- T?O 1 USER là giám ??c :
 
@@ -99,16 +113,77 @@ grant SELECT on "ADMIN"."THONGTIN_DUAN" to "GIAMDOC" ;
 -- 12/5/2017 SU DUNG CO CHE VPD
 
 
--- yeu cau 5 ----- ta chia nho thanh 2 chinh sach ung voi 2 ham duoi day
+-- yeu cau 4 ----- cai dat co che VPD: NHAN VIEN BINH THUONG (...) CHI XEM DUOC
+-----THONG TIN CUA NHANVIEN CUNG PHONG BAN, VA CHI DUOC XEM LUONG CUA CHINH MINH
+
+
+
+--tao context va context_package
+CREATE CONTEXT ADMIN USING ADMIN.context_package;
+CREATE OR REPLACE PACKAGE context_package AS
+  PROCEDURE set_context;
+END;
+
+-- cai dat procedure
+CREATE OR REPLACE PACKAGE BODY context_package IS
+   PROCEDURE set_context IS
+    v_user VARCHAR2(30);
+    countTP number;-- truongphong
+    countTCN number;--truongchinhanh
+    countTDA number;--truongduan
+   BEGIN
+    v_user:=SYS_CONTEXT('userenv','SESSION_USER');
+    v_user:=lower(v_user);
+    BEGIN
+      SELECT COUNT(*) INTO countTP
+                    FROM admin.PHONGBAN pb
+                    WHERE pb.truongPhong=v_user;
+      SELECT COUNT(*) INTO countTCN
+                    FROM admin.CHINHANH CN
+                    WHERE CN.truongChiNhanh=v_user;
+      
+    IF(lcount>0)
+      THEN
+          DBMS_SESSION.set_context('ADMIN','POSITION','TRUONGPHONG');
+      END IF;
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_SESSION.set_context('ADMIN','POSITION','none');
+    END;
+   END set_context;
+End context_package;
+
+
+--cap quyen cho moi nguoi dung deu su dung duoc package tren
+
+GRANT EXECUTE ON context_package TO PUBLIC;
+CREATE OR REPLACE PUBLIC SYNONYM context_package FOR ADMIN.context_package;
+
+-- TAO TRIGGER EP BUOC SU DUNG NGU CANH SAU KHI DANG NHAP
+CREATE OR REPLACE TRIGGER ADMIN.set_security_context
+AFTER LOGON ON DATABASE
+BEGIN
+  ADMIN.context_package.set_context;
+END;
+
+-- luc nay co the su dung ngu canh vao trong ham
 -- 1. ham de moi nhan vien chi xem duoc thong tin luong cua minh
 create or replace function xemLuong(p_schema in varchar2,p_obj in varchar2)
 return varchar2
 as
   user varchar2(100);
 BEGIN
-  user:=concat('''',SYS_CONTEXT('userenv','SESSION_USER'));
-  user:=concat(user,'''');
-  return 'maNV='||lower(user); 
+  user:=SYS_CONTEXT('ADMIN','POSITION');
+  IF(USER='TRUONGPHONG') 
+  THEN 
+      RETURN '1=1';
+  ELSE
+  BEGIN
+      user:=concat('''',SYS_CONTEXT('userenv','SESSION_USER'));
+      user:=concat(user,'''');
+      return 'maNV='||lower(user); 
+  END;
+  END IF;
 END;
 --gan chinh sach 1 theo ham nay
 execute DBMS_RLS.ADD_POLICY(
