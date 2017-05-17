@@ -423,7 +423,7 @@ grant select,insert,update,delete on chitieu to truongduan;
 
 
 
- ------tao function policy  Tr??ng d? án ch? ???c phép ??c, ghi thông tin chi tiêu c?a d? án mình qu?n lý (VPD).
+------tao function policy  Tr??ng d? án ch? ???c phép ??c, ghi thông tin chi tiêu c?a d? án mình qu?n lý (VPD).
  
 create or replace function vpd_chitieu(p_schema in varchar2,p_obj in varchar2)
 return varchar2
@@ -433,7 +433,7 @@ as
 BEGIN
     usera:= SYS_CONTEXT('userenv','SESSION_USER');
     usera:=lower(usera);
-    temp:= ' duAn IN (select duan.maDA from duan where duan.truongDA=' || usera || ')';
+    temp:= ' duAn IN (select duan.maDA from duan where duan.truongDA='''|| usera ||''')';
     return temp; 
 END;
 begin
@@ -445,6 +445,7 @@ policy_function => 'vpd_chitieu',
 statement_types => 'select, update, insert,delete',
 update_check => TRUE );
 end;
+
 
 
 
