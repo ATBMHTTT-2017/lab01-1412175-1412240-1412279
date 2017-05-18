@@ -448,6 +448,32 @@ end;
 
 
 
+-----------Trưởng phòng chỉ được phép đọc thông tin chi tiêu của dự án trong phòng ban mình quản lý. Với những dự án không thuộc phòng ban của mình, các trưởng phòng được phép xem thông tin chi tiêu nhưng không được phép xem số tiền cụ thể (VPD)
+create or replace function vpd_chitieu_truongphong(p_schema in varchar2,p_obj in varchar2)
+return varchar2
+as
+  usera varchar2(100);
+  temp varchar2(200);
+BEGIN
+    usera:= SYS_CONTEXT('userenv','SESSION_USER');
+    usera:=lower(usera);
+    temp:= 'duAn IN(select duan.maDA from duan , phongban where  phongban.maPhong = duan.phongChuTri and phongban.truongPhong='''|| usera ||''')';
+    return temp; 
+END;
+
+begin
+ dbms_rls.add_policy (object_schema => 'khanhbui1412240',
+object_name => 'chitieu',
+policy_name => 'truongphong_chitieu',
+function_schema => 'khanhbui1412240',
+policy_function => 'vpd_chitieu_truongphong',
+sec_relevant_cols=>'soTien',
+sec_relevant_cols_opt=>dbms_rls.ALL_ROWS);
+end;
+
+grant select on chitieu to truongphong
+
+
 
  
  
