@@ -109,7 +109,7 @@ insert into chinhanh(maCN,tenCN,truongChiNhanh)
 insert into chinhanh(maCN,tenCN,truongChiNhanh) 
 			values(2,'Hà Nội','nv01');
 insert into chinhanh(maCN,tenCN,truongChiNhanh) 
-			values(3,'�?à Nẵng','nv05');
+			values(3,'�?à Nẵng','nv05');
 insert into chinhanh(maCN,tenCN,truongChiNhanh) 
 			values(4,'Nha Trang','nv13');
 insert into chinhanh(maCN,tenCN,truongChiNhanh) 
@@ -148,15 +148,15 @@ insert into phongban(maPhong,tenPhong,truongPhong,ngayNhanChuc,soNhanVien,chiNha
 			values(15,'Ke hoach','nv18',to_date('27-04-2016','dd-MM-yyyy'),10,5);
 --3. bảng nhanvien
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv01','Trần Văn An','�?inh quyết P Quận 14-TP. HCM','096939407','', 4,2, 6000000);
+			values('nv01','Trần Văn An','�?inh quyết P Quận 14-TP. HCM','096939407','', 4,2, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv02','Nguyễn Tiến Tấn','Trương viết J Quận 7-TP. HCM','0934764519','',1 ,1,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv03','Triệu Xuân Bảo','Bạch đình E Quận 4-TP. HCM','0963215433','', 1,1,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv04','Châu Tiến Dung','�?ổ sơn W Quận 4-TP. HCM','0935472370','', 2, 1,6000000 );
+			values('nv04','Châu Tiến Dung','�?ổ sơn W Quận 4-TP. HCM','0935472370','', 2, 1,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv05','Nguyễn Sơn Châu','Bạch thị R Quận 3-�?à nẳng','0939859707','', 7, 3, 6000000);
+			values('nv05','Nguyễn Sơn Châu','Bạch thị R Quận 3-�?à nẳng','0939859707','', 7, 3, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv06','Dương Minh Tân','Hà thế H Quận 14-TP. HCM','0978781517','', 3, 1, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
@@ -164,18 +164,18 @@ insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv08','Nguyễn Phước Hóa','Bạch lê I Quận 2-TP. HCM','0980169830','',5 , 2,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv09','Mai Cao Bích','�?inh văn L Quận 13-TP. HCM','0940350125','', 6, 2, 6000000);
+			values('nv09','Mai Cao Bích','�?inh văn L Quận 13-TP. HCM','0940350125','', 6, 2, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv10','Nguyễn Thế Dũng','Tô kỳ G Quận 4-Cần Thơ','0926685458','', 7, 3, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv11','Thái Sơn Giang','�?ặng minh P Quận 8-TP. HCM','0938394537','',8,3 ,6000000 );
+			values('nv11','Thái Sơn Giang','�?ặng minh P Quận 8-TP. HCM','0938394537','',8,3 ,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv12','Trần Tiến Hạnh','Phạm gia V Quận 4-TP. HCM','0938324631','', 9,3, 6000000);
 
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv13','Nguyễn Thế Dũng Bạch','Tô kỳ G Quận 4-Cần Thơ','09266855458','', 10, 4, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv14','Thái Sơn Giang Bảo','�?ặng minh P Quận 8-TP. HCM','09383945537','',11,4 ,6000000 );
+			values('nv14','Thái Sơn Giang Bảo','�?ặng minh P Quận 8-TP. HCM','09383945537','',11,4 ,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv15','Trần Tiến Hạnh An','Phạm gia V Quận 4-TP. HCM','09383245631','', 12,4, 6000000);
 
@@ -183,7 +183,7 @@ insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv16','Nguyễn An','Tô kỳ G Quận 4-Cần Thơ','09266855458','', 13, 5, 6000000);
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
-			values('nv17','Thái Sơn Văn','�?ặng minh P Quận 8-TP. HCM','09383945537','',14,5 ,6000000 );
+			values('nv17','Thái Sơn Văn','�?ặng minh P Quận 8-TP. HCM','09383945537','',14,5 ,6000000 );
 insert into nhanvien(maNV,hoTen,diaChi,dienThoai,email,maPhong,chiNhanh,luong)
 			values('nv18','Trần Tiến Quận','Phạm gia V Quận 4-TP. HCM','09383245631','', 15,5, 6000000);
 
@@ -472,6 +472,104 @@ sec_relevant_cols_opt=>dbms_rls.ALL_ROWS);
 end;
 
 grant select on chitieu to truongphong
+
+---- Tao policy my_ols
+begin
+SA_SYSDBA.CREATE_POLICY (
+policy_name => 'my_ols',
+column_name => 'olscolumn0'
+);
+end;
+------ Tao user sec_mgr  de chua cac chinh sach bao mat
+
+create user sec_mgr identified by 123456 DEFAULT TABLESPACE users 
+          TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
+grant my_ols_dba to sec_mgr;
+
+GRANT EXECUTE ON sa_components TO sec_mgr;
+GRANT EXECUTE ON sa_user_admin TO sec_mgr;
+GRANT EXECUTE ON char_to_label TO sec_mgr;
+---- tao cac nhan level : thong thuong, gioi han , bi mat , bi mat cao.
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Thong Thuong',
+short_name => 'TT',
+level_num => 5000);
+end;
+
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Gioi Han',
+short_name => 'GH',
+level_num => 6000);
+end;
+
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Bi Mat',
+short_name => 'BM',
+level_num => 7000);
+end;
+
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Bi Mat Cao',
+short_name => 'BMC',
+level_num => 8000);
+end;
+--- tao cac  nhan compartment : nhan su, ke toan , ke hoach.
+BEGIN
+  SA_COMPONENTS.CREATE_COMPARTMENT (
+   policy_name     => 'my_ols',
+   comp_num        => '8010',
+   short_name      => 'NS',
+   long_name       => 'Nhan Su');
+END;
+
+BEGIN
+  SA_COMPONENTS.CREATE_COMPARTMENT (
+   policy_name     => 'my_ols',
+   comp_num        => '8020',
+   short_name      => 'KT',
+   long_name       => 'Ke Toan');
+END;
+
+BEGIN
+  SA_COMPONENTS.CREATE_COMPARTMENT (
+   policy_name     => 'my_ols',
+   comp_num        => '8030',
+   short_name      => 'KH',
+   long_name       => 'Ke Hoach');
+END;
+
+--- tao cac nhan group : thanh pho ho chi minh, ha noi , da nang
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 9000,
+  short_name      => 'TPHCM',
+  long_name       => 'Thanh Pho Ho Chi Minh');
+END;
+
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 9100,
+  short_name      => 'HN',
+  long_name       => 'Ha Noi');
+END;
+
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 9200,
+  short_name      => 'DN',
+  long_name       => 'Da Nang');
+END;
 
 
 
