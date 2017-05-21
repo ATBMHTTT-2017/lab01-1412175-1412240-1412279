@@ -252,12 +252,23 @@ insert into chitieu(maChiTieu,tenChiTieu,soTien,duAn)
 			values(15,'Vat lieu',0 , 5);
 --6. bảng phancong
 insert into phancong(maNV,duAn,vaiTro,phuCap)
-			values('nv06', 1,'truongDA', 0);
+			values('nv06', 1,'truongDA', 100);
 insert into phancong(maNV,duAn,vaiTro,phuCap)
 			values('nv09', 2,'truongDA', 0);
 insert into phancong(maNV,duAn,vaiTro,phuCap)
-			values('nv12', 3,'truongDA', 0);
+			values('nv12', 3,'truongDA', 0);			
 insert into phancong(maNV,duAn,vaiTro,phuCap)
 			values('nv15', 4,'truongDA', 0);
 insert into phancong(maNV,duAn,vaiTro,phuCap)
 			values('nv18', 5,'truongDA',0 );
+
+-- thanhvien khong phai la truong du an
+insert into phancong(maNV,duAn,vaiTro,phuCap)
+			values('nv07', 1,'thanhvien',50);
+insert into phancong(maNV,duAn,vaiTro,phuCap)
+			values('nv10', 2,'thanhvien',50);
+insert into phancong(maNV,duAn,vaiTro,phuCap)
+			values('nv13', 3,'thanhvien',50);
+insert into phancong(maNV,duAn,vaiTro,phuCap)
+			values('nv16', 4,'thanhvien',50);		
+
