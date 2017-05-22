@@ -1,0 +1,58 @@
+﻿BÁO CÁO QUÁ TRÌNH THỰC HIỆN
+
+YÊU CẦU SỐ 8.1: Nhân viên phụ trách đủ các lĩnh vực,
+	có cấp độ phù hợp mới được phép truy xuất dữ liệu thu chi.
+
+
+
+
+Sinh viên thực hiện: 1412279 - Trần Đình Lâm
+
+
+NỘI DUNG QUÁ TRÌNH THỰC HIỆN
+
+1. Cách giải quyết:
+	- Vì Nhân viên tham gia dự án phụ trách đủ 3 lĩnh vực, nên mỗi Lalel gán cho nhân viên 
+	  đều chứa 3 Compartment là "Lương","Quản lý","Vật liệu"
+	- Nhân viên có cấp thấp hơn quản lí dự án, nên ta để Level của nhân viên là "Không nhạy cảm",
+	  còn Level của quản lí dự án là "Bí mật"
+
+2. Các bước thực hiện:
+	- Cấp các quyền cần thiết cho người quản trị, Unlock tài khoản "lbacsys"
+	- Tạo hàm chính sách ứng với cột lưu trữ là "olscolumn0"
+		begin
+		SA_SYSDBA.CREATE_POLICY (
+  			policy_name => 'nhanvien_ols',
+  			column_name => 'nhanvien_label'
+ 			 );
+		end;
+	- Sau khi chính sách được khai báo, một quyền dba sẽ tự khởi tạo, ta cấp quyền này
+	  cho người quản trị: GRANT nhanvien_ols_dba TO quantri;
+	- Gán tạm thời chính sách này cho TABLE CHITIEU, nội dung chính sách để rỗng.
+	- Định nghĩa các thành phần của Label cần dùng, bao gồm 3 Level và 3 Compartment:
+		+ level : KNC: Không nhạy cảm, "NC"- Nhạy cảm, "BMT" bí mật
+		+ Compartment: L - Lương, QL- Quản lý , VL - Vật liệu
+	- Định nghĩa các Label cần dùng: Có tổng cộng 9 Label cho yêu cầu này
+		LABEL TAG	LABEL VALUE
+			2	BMT:L
+			3	BMT:QL
+			4	BMT:VL
+			5	NC:L
+			6	NC: QL
+			7	NC: VL
+			8	KNC: L
+			9	KNC:QL
+			10	KNC: VL
+
+		
+	- Gán nhãn cho từng dòng dữ liệu trong bảng CHITIEU, ta dùng câu truy vấn UPDATE.
+		Ví dụ dự án 1,2,3 có Level là "Không nhạy cảm",
+		dự án 4 và 5 có level là "Bí mật". Vậy nhân viên bình thường không đọc được 
+		dự án 4 và 5.
+	- Gán nhãn cho các nhân viên sao cho phù hợp.
+	- Re_Apply lại chính sách, có điều chỉnh tùy chọn là "READ_CONTROL,WRITE_CONTROL"
+			
+3. Kiểm tra kết quả:
+	- Dùng 2 user: 1 nhân viên thường (nv07) và 1 nhân viên trưởng dự án (nv06)
+
+4. File script mô tả: 141279_Policy_8.1.sql

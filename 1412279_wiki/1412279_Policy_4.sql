@@ -43,7 +43,7 @@ CREATE OR REPLACE PACKAGE BODY context_package IS
       END IF;
     EXCEPTION
     WHEN NO_DATA_FOUND THEN
-        DBMS_SESSION.set_context('quantri','POSITION','none');
+        DBMS_SESSION.set_context('quantri','POSITION','NHANVIEN');
     END;
    END set_context;
 End context_package;
@@ -55,6 +55,7 @@ GRANT EXECUTE ON context_package TO PUBLIC;
 CREATE OR REPLACE PUBLIC SYNONYM context_package FOR quantri.context_package;
 
 -- TAO TRIGGER EP BUOC SU DUNG NGU CANH SAU KHI DANG NHAP
+drop trigger quantri.set_security_context;
 CREATE OR REPLACE TRIGGER quantri.set_security_context
 AFTER LOGON ON DATABASE
 BEGIN
@@ -82,16 +83,18 @@ BEGIN
   END CASE;
 END;
 --gan chinh sach 1 theo ham nay
-execute DBMS_RLS.ADD_POLICY(
+exec DBMS_RLS.DROP_POLICY('QUANTRI','NHANVIEN','sec_Luong');
+BEGIN
+DBMS_RLS.ADD_POLICY(
           object_schema => 'quantri',
           object_name => 'nhanvien',
           policy_name => 'sec_Luong',
           policy_function => 'xemLuong',                  
-          statement_types => 'select,update,insert',
-          SEC_RELEVNT_COLS => 'luong',
-          sec_relevant_cols_opt => dbms_rls.ALL_ROWS
+          statement_types => 'select',
+          sec_relevant_cols => 'luong',
+          sec_relevant_cols_opt => DBMS_RLS.ALL_ROWS
   );
-
+END;
 ----2. ham de moi nhan vien chi xem duoc nhan vien cung phong ban
 create or replace function xemNhanvien(p_schema in varchar2,p_obj in varchar2)
 return varchar2
@@ -116,9 +119,12 @@ BEGIN
     end case;
 END;
 --gan ham chinh sach
-execute DBMS_RLS.ADD_POLICY(
+exec DBMS_RLS.DROP_POLICY('QUANTRI','NHANVIEN','sec_Nhanvien');
+BEGIN
+DBMS_RLS.ADD_POLICY(
           object_schema => 'quantri',
           object_name => 'nhanvien',
           policy_name => 'sec_Nhanvien',
           policy_function => 'xemNhanvien'            
   );
+END;

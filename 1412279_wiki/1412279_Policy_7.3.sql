@@ -1,6 +1,13 @@
 --YEU CAU 7.3-- TRUONG CHI NHANH DUOC QUYEN 
 --TRUY XUAT CHI TIEU CUA DU AN THUOC CHI NHANH CUA MINH
 --dieu kien truoc khi bat dau tao OLS
+grant truongchinhanh to nv01,nv02,nv05;
+grant create session to nv01,nv02,nv05;
+grant select,insert on quantri.duan to truongchinhanh;
+
+
+
+
 --0.1. grant quyen can thiet cho quantri, UNLOCK ACCOUNT LBACSYS
 GRANT CONNECT, RESOURCE, SELECT_CATALOG_ROLE TO quantri;
 ALTER USER lbacsys IDENTIFIED BY lbacsys ACCOUNT UNLOCK;
@@ -29,6 +36,38 @@ GRANT MY_OLS_DBA TO quantri;
 
 --4. Dinh nghia cac thanh phan cua Label:
 -- Da duoc dinh nghia trong sctipt taoCSDL_QLDUAN
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Thong thuong',
+short_name => 'TT',
+level_num => 1);
+end;
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 100,
+  short_name      => 'HN',
+  long_name       => 'Ha Noi');
+END;
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 200,
+  short_name      => 'TPHCM',
+  long_name       => 'Ho Chi Minh',
+  parent_name     => 'HN'
+  );
+END;
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 300,
+  short_name      => 'DN',
+  long_name       => 'Da Nang',
+  parent_name     => 'HN'
+  );
+END;
 --5. Gan Policy cho Table:
 
 BEGIN
@@ -41,10 +80,9 @@ BEGIN
  END;
 --6: Tao cac Nhan can thiet, la su ket hop giua 3 thanh phan
 
-EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',400,'TT::HN,TPHCM,DN',TRUE);
-EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',300,'TT::TPHCM',TRUE);
-EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',200,'TT::DN',TRUE);
-EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',100,'TT::HN',TRUE);
+EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',30,'TT::TPHCM',TRUE);
+EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',20,'TT::DN',TRUE);
+EXECUTE SA_LABEL_ADMIN.CREATE_LABEL('my_ols',10,'TT::HN',TRUE);
 --7: gan Nhan can thiet cho du lieu trong bang DUAN
 -- DU AN THUOC CHI NHANH HANOI
 UPDATE DUAN SET olscolumn0=CHAR_TO_LABEL('my_ols','TT::HN')
@@ -82,7 +120,7 @@ UPDATE DUAN SET olscolumn0=CHAR_TO_LABEL('my_ols','TT::HN')
 --NV05: Da Nang
 --nv13: Nha Trang
 --nv16: Bien Hoa
-exec SA_USER_ADMIN.SET_USER_LABELS('MY_OLS','NV01','TT::HN,TPHCM,DN');
+exec SA_USER_ADMIN.SET_USER_LABELS('MY_OLS','NV01','TT::HN');
 exec SA_USER_ADMIN.SET_USER_LABELS('MY_OLS','NV02','TT::TPHCM');
 exec SA_USER_ADMIN.SET_USER_LABELS('MY_OLS','NV05','TT::DN');
 exec SA_USER_ADMIN.SET_USER_LABELS('MY_OLS','NV13','TT::HN');

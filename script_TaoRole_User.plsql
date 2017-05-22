@@ -84,14 +84,22 @@ grant truongduan to nv06;
 
 
 --CAP QUYEN CHO ROLE KHI MUON CAI DAT CHINH SACH
+-- YEU CAU 1: TRUONG PHONG DUOC CAP NHAT, INSERT VAO DUAN
+		GRANT INSERT,UPDATE ON DUAN TO TRUONGPHONG;
 grant insert,update,select on quantri.duan to truongphong;
 grant select on quantri.nhanvien to truongphong;
+grant select on quantri.phongban to truongphong;
+grant select on quantri.chinhanh to truongphong;
+grant select on quantri.phongban to nhanvien;
+grant select on quantri.chinhanh to nhanvien;
+grant select on quantri.duan to nhanvien;
 grant select on quantri.nhanvien to nhanvien;
 grant select on quantri.nhanvien to truongchinhanh;
 grant select on quantri.nhanvien to truongduan;
 grant select on quantri.duan to truongchinhanh;
 
 grant select,insert,update on quantri.chitieu to public;
+
 
 
 -- 12/5/2017 SU DUNG CO CHE VPD

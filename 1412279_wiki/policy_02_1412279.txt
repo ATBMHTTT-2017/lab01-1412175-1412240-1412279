@@ -1,0 +1,26 @@
+﻿BÁO CÁO QUÁ TRÌNH THỰC HIỆN
+
+YÊU CẦU SỐ 2:Giám đốc được phép xem thông tin dự án gồm 
+		(mã dự án, tên dự án, kinh phí, tên phòng chủ trì, tên chi nhánh chủ trì, 
+		tên trưởng dự án và tổng chi) (DAC)
+
+
+Sinh viên thực hiện: 1412279 - Trần Đình Lâm
+
+
+NỘI DUNG QUÁ TRÌNH THỰC HIỆN
+
+1. Cách giải quyết:
+	Vì dữ liệu lấy ra là kết hợp giữa nhiều TABLE và chỉ dữ liệu tiêu biểu,
+	ta cấp quyền cho giám đốc thông qua VIEW.
+
+2. Các bước thực hiện:
+	- Người quản trị Tạo VIEW với tên: THONGTIN_DUAN với các cột như trong yêu cầu
+	- Cấp quyền SELECT trên VIEW này cho user nào là "GIAMDOC".
+
+3. Kiểm tra kết quả:
+	- sử dụng user "giamdoc1" có vai trò "GIAMDOC" để thực hiện quyền SELECT trên VIEW
+	  Kết quả trả về danh sách mong muốn	
+
+
+4. File script mô tả: 1412279_Policy_2.sql
