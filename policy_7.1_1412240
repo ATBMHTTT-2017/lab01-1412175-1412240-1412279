@@ -1,0 +1,118 @@
+------ Tao user sec_mgr  de chua cac chinh sach bao mat
+
+create user sec_mgr identified by 123456 DEFAULT TABLESPACE users 
+          TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
+grant my_ols_dba to sec_mgr;
+
+GRANT EXECUTE ON sa_components TO sec_mgr;
+GRANT EXECUTE ON sa_user_admin TO sec_mgr;
+GRANT EXECUTE ON char_to_label TO sec_mgr;
+---- tao  level : thong thuong, gioi han , bi mat , bi mat cao.
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Thong Thuong',
+short_name => 'TT',
+level_num => 5000);
+end;
+
+begin
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Gioi Han',
+short_name => 'GH',
+level_num => 6000);
+
+
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Bi Mat',
+short_name => 'BM',
+level_num => 7000);
+
+
+sa_components.create_level
+(policy_name => 'my_ols',
+long_name => 'Bi Mat Cao',
+short_name => 'BMC',
+level_num => 8000);
+end;
+--- tao  compartment : nhan su, ke toan , ke hoach.
+BEGIN
+  SA_COMPONENTS.CREATE_COMPARTMENT (
+   policy_name     => 'my_ols',
+   comp_num        => '8010',
+   short_name      => 'NS',
+   long_name       => 'Nhan Su');
+
+  SA_COMPONENTS.CREATE_COMPARTMENT (
+   policy_name     => 'my_ols',
+   comp_num        => '8020',
+   short_name      => 'KT',
+   long_name       => 'Ke Toan');
+
+  SA_COMPONENTS.CREATE_COMPARTMENT (
+   policy_name     => 'my_ols',
+   comp_num        => '8030',
+   short_name      => 'KH',
+   long_name       => 'Ke Hoach');
+END;
+
+--- tao cac nhan group : thanh pho ho chi minh, ha noi , da nang
+BEGIN
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 9000,
+  short_name      => 'TPHCM',
+  long_name       => 'Thanh Pho Ho Chi Minh');
+
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 9100,
+  short_name      => 'HN',
+  long_name       => 'Ha Noi');
+
+
+ SA_COMPONENTS.CREATE_GROUP (
+  policy_name     => 'my_ols',
+  group_num       => 9200,
+  short_name      => 'DN',
+  long_name       => 'Da Nang');
+END;
+------ tao label
+begin
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 1,
+label_value => 'BMC');
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 2,
+label_value => 'BM');
+
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 3,
+label_value => 'GH');
+
+
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 4,
+label_value => 'TT');
+end;
+--- apply policy vao bang du an
+BEGIN
+  SA_POLICY_ADMIN.APPLY_TABLE_POLICY (
+    policy_name => 'my_ols',
+    schema_name => 'khanhbui1412240',
+    table_name  => 'duan',
+    table_options => 'NO_CONTROL' );
+END;
+
+grant select, update,insert on duan to sec_mgr;
+ UPDATE khanhbui1412240.duan 
+SET olscolumn0 = char_to_label ('my_ols', 'BMC');

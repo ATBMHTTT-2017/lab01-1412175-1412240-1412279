@@ -1,0 +1,27 @@
+grant select on duan to nhanvien;
+
+begin
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv19',
+max_read_label => 'TT:KT:TPHCM');
+
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv20',
+max_read_label => 'TT:KH:TPHCM');
+end;
+
+begin
+sa_policy_admin.remove_table_policy
+(policy_name => 'my_ols',
+schema_name => 'khanhbui1412240',
+table_name => 'duan');
+
+
+sa_policy_admin.apply_table_policy
+(policy_name => 'my_ols',
+schema_name => 'khanhbui1412240',
+table_name => 'duan',
+table_options => 'READ_CONTROL,WRITE_CONTROL');
+end;

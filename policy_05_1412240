@@ -1,0 +1,23 @@
+create or replace function vpd_chitieu(p_schema in varchar2,p_obj in varchar2)
+return varchar2
+as
+  usera varchar2(100);
+  temp varchar2(100);
+BEGIN
+    usera:= SYS_CONTEXT('userenv','SESSION_USER');
+    usera:=lower(usera);
+    temp:= ' duAn IN (select duan.maDA from duan where duan.truongDA='''|| usera ||''')';
+    return temp; 
+END;
+
+create view tda_chitieu as select * from chitieu;
+
+begin
+dbms_rls.add_policy (object_schema => 'khanhbui1412240',
+object_name => 'tda_chitieu',
+policy_name => 'my_chitieu',
+function_schema => 'khanhbui1412240',
+policy_function => 'vpd_chitieu',
+statement_types => 'select, update, insert,delete',
+update_check => TRUE );
+end;

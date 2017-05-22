@@ -1,0 +1,138 @@
+begin
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv01',
+max_read_label => 'TT');
+
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv02',
+max_read_label => 'TT');
+
+
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv03',
+max_read_label => 'TT');
+
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv04',
+max_read_label => 'TT');
+
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv05',
+max_read_label => 'TT');
+end;
+---- tao label cho truong chi nhanh
+begin
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 6,
+label_value => 'BM:NS,KT,KH:TPHCM');
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 7,
+label_value => 'BM:NS,KT,KH:HN');
+
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 8,
+label_value => 'BM:NS,KT,KH:DN');
+end;
+
+--- tao label bang du an
+begin
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 20,
+label_value => 'TT:KH:TPHCM');
+
+
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 22,
+label_value => 'TT:KH:DN');
+
+
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 21,
+label_value => 'TT:KH:HN');
+
+sa_label_admin.create_label
+(policy_name => 'my_ols',
+label_tag => 23,
+label_value => 'TT:KT:TPHCM');
+
+end;
+
+
+------ set label
+begin
+
+-- truong chi nhanh tphcm
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv02',
+max_read_label => 'BM:NS,KT,KH:TPHCM');
+
+--- truong chi nhanh ha noi
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv01',
+max_read_label => 'BM:NS,KT,KH:HN');
+
+---- truong chi nhanh da nang
+sa_user_admin.set_user_labels
+(policy_name => 'my_ols',
+user_name => 'nv05',
+max_read_label => 'BM:NS,KT,KH:DN');
+end;
+---- set label cho du an
+update khanhbui1412240.duan
+set olscolumn0 = char_to_label('my_ols','TT:KH:TPHCM')
+where maDA=1;
+
+update khanhbui1412240.duan
+set olscolumn0 = char_to_label('my_ols','TT:KH:HN')
+where maDA=2;
+
+update khanhbui1412240.duan
+set olscolumn0 = char_to_label('my_ols','TT:KH:DN')
+where maDA=3;
+
+update khanhbui1412240.duan
+set olscolumn0 = char_to_label('my_ols','TT:KT:TPHCM')
+where maDA=6;
+
+
+
+create or replace function vpd_chitieu_truongchinhanh(p_schema in varchar2,p_obj in varchar2)
+return varchar2
+as
+  temp varchar2(200);
+BEGIN
+    temp:= 'duAn IN(select duan.maDA from duan)';
+    return temp; 
+END;
+
+create view tcn_chitieu as select * from chitieu;
+
+grant select on tcn_chitieu to truongchinhanh;
+
+begin
+dbms_rls.add_policy (object_schema => 'khanhbui1412240',
+object_name => 'tcn_chitieu',
+policy_name => 'tcn_ct',
+function_schema => 'khanhbui1412240',
+policy_function => 'vpd_chitieu_truongchinhanh',
+statement_types => 'select',
+update_check => TRUE );
+end;
+
