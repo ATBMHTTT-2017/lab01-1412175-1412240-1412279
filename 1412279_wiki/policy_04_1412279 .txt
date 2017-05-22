@@ -1,0 +1,41 @@
+﻿BÁO CÁO QUÁ TRÌNH THỰC HIỆN
+
+YÊU CẦU SỐ 4: Tất cả nhân viên bình thường (trừ trưởng phòng, trưởng chi nhánh và các trưởng dự án)
+ 		chỉ được phép xem thông tin nhân viên trong phòng của mình,
+		chỉ được xem lương của bản thân (VPD). 
+
+
+Sinh viên thực hiện: 1412279 - Trần Đình Lâm
+
+
+NỘI DUNG QUÁ TRÌNH THỰC HIỆN
+
+1. Cách giải quyết:
+	- Cài đặt 2 hàm chính sách lên TABLE NHANVIEN sử dụng cơ chế VPD:
+		+  Hàm 1 quy định nhân viên chỉ được xem lương của bản thân
+		+  Hàm 2 quy định nhân viên chỉ được xem thông tin của nhân viên
+		   cùng phòng ban với mình
+
+2. Các bước thực hiện:
+	- Tạo CONTEXT_PACKAGE để xác định ngữ cảnh khi đăng nhập
+	- Gắn PROCEDURE và cài đặt PROCEDURE trả về ngữ cảnh riêng biệt 
+	  cho mỗi loại user đăng nhập vào hệ thống(TRUONGPHONG, TRUONGCHINHANH, 
+	  TRUONGDUAN,NHANVIEN), từ đó xác định user
+	  có vai trò NHANVIEN là user nào.
+	- Tạo Trigger ép buộc phải sử dụng ngữ cảnh sau khi đăng nhập.
+	- Tạo 2 hàm chính sách XEMLUONG() và XEMNHANVIEN() như mô tả ở trên
+	- Gắn hàm XEMLUONG() vào TABLE NHANVIEN với 2 tham số đặc biệt:
+		SEC_RELEVNT_COLS => 'luong',
+          	sec_relevant_cols_opt => dbms_rls.ALL_ROWS
+	- Gắn hàm XEMNHANVIEN() vào TABLE NHANVIEN theo cách thông thường.
+	- Để tránh vấn đề đệ quy trong VPD, ta tạo 1 VIEW NHANVIEN2 và gắn hàm chính sách
+	  lên VIEW đó thay cho TABLE gốc là NHANVIEN
+	
+			
+3. Kiểm tra kết quả:
+	- Sử dụng 1 user có vai trò "TRUONGPHONG" để xem bảng NHANVIEN
+	- dùng user là một user bình thường, ví dụ "nv19" để xem bảng NHANVIEN
+
+
+
+4. File script mô tả: 141279_Policy_4.sql

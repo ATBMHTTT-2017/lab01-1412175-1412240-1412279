@@ -1,11 +1,11 @@
-﻿# BT-ATBMHTTT-1 - *Name of your app*
+﻿# BT-ATBMHTTT-1 - QUẢN LÍ DỰ ÁN
 
 **Name of your app** là một bài tập 1 tại môn ATBMHTTT. Bài tập yêu cầu sinh viên tạo cơ sở dữ liệu, phân quyền theo các yêu cầu.
 
 Thành viên:
 * [ ] **1412240** Tên sinh viên 1 (tên tài khoản github)
 * [ ] **1412175** Tên sinh viên 2 (tên tài khoản github)
-* [ ] **1412279** Tên sinh viên 2 (tên tài khoản github)
+* [ ] **1412279** Trần Đình Lâm (github:trandinhlam)
 
 ## Yêu cầu
 
@@ -14,14 +14,14 @@ Sinh viên check vào các mục bên dưới và ghi mã sinh viên đã làm v
 Yêu cầu **GIT**
 * [ ] Có sử dụng GIT.
 * [ ] Sử dụng GIT theo Centralized Workflow.
-* [ ] Sử dụng GIT theo Feature Branch Workflow.
+* [x] Sử dụng GIT theo Feature Branch Workflow.
 * [ ] Sử dụng GIT theo Gitflow Workflow.
 
 Yêu cầu **bắt buộc**
-* [ ] Viết script tạo cấu trúc cơ sở dữ liệu (**MSSV**)
-* [ ] Viết script thêm dữ liệu (**MSSV**)
-* [ ] Tạo tài khoản cho các nhân viên trong bảng Nhân Viên. Tên tài khoản trùng với mã nhân viên. Tạo ít nhất 5 tài khoản cho mỗi vị trí: trưởng dự án, trưởng phòng, trưởng chi nhánh, nhân viên, giám đốc và ít nhất 5 dòng cho các bảng dữ liệu còn lại. (**MSSV**)
-* [ ] Tạo các role cho các vị trí phù hợp cho công ty. (**MSSV**)
+* [x] Viết script tạo cấu trúc cơ sở dữ liệu (**1412279**)
+* [x] Viết script thêm dữ liệu (**1412279*)
+* [x] Tạo tài khoản cho các nhân viên trong bảng Nhân Viên. Tên tài khoản trùng với mã nhân viên. Tạo ít nhất 5 tài khoản cho mỗi vị trí: trưởng dự án, trưởng phòng, trưởng chi nhánh, nhân viên, giám đốc và ít nhất 5 dòng cho các bảng dữ liệu còn lại. (**1412279**)
+* [x] Tạo các role cho các vị trí phù hợp cho công ty.
 * [ ] Chỉ trưởng phòng được phép cập nhật và thêm thông tin vào dự án (DAC). (**MSSV**)
 * [ ] Giám đốc được phép xem thông tin dự án gồm (mã dự án, tên dự án, kinh phí, tên phòng chủ trì, tên chi nhánh chủ trì, tên trưởng dự án và tổng chi) (DAC). (**MSSV**)
 * [ ] Chỉ trưởng phòng, trưởng chi nhánh được cấp quyền thực thi stored procedure cập nhật thông tin phòng ban của mình (DAC). (**MSSV**)
@@ -44,11 +44,8 @@ Liệt kê các **yêu cầu nâng cao** đã thực hiện:
 
 ## Demo
 
-Link ảnh GIF demo ứng dụng:
+1412279_Link video demo các Yêu cầu phân quyền: https://www.youtube.com/watch?v=GM1PXGiyvtU
 
-![Video Walkthrough](demo.gif)
-
-Tạo ảnh GIF với chương trình [LiceCap](http://www.cockos.com/licecap/).
 
 
 ## License
