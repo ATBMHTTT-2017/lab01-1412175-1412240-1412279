@@ -379,3 +379,15 @@ create user nv20 identified by nv20 DEFAULT TABLESPACE users
  --- nhan vien nv19 , nv20
  grant nhanvien to nv19;
 grant nhanvien to nv20;
+------ truong du an nv06,nv09,nv12,nv15,nv18
+grant truongduan to nv06;
+
+grant truongduan to nv09;
+
+grant truongduan to nv12;
+
+grant truongduan to nv15;
+
+grant truongduan to nv18;
+
+grant select,insert,update,delete on chitieu to truongduan;
