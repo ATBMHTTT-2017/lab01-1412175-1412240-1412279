@@ -1,0 +1,35 @@
+
+ ----------------------procedure update thong tin phong ban
+ 
+ create or replace procedure update_phong_ban
+ (
+	in_tenphong in varchar2,
+	in_truongphong in varchar2,
+	in_ngaynhanchuc in  date,
+	in_sonhanvien in number,
+	in_chinhanh in number
+ 
+ )
+ as 
+ mPhong number;
+ usera varchar2(10);
+ 
+ begin
+ usera := SYS_CONTEXT('userenv','SESSION_USER'); 
+ usera:=LOWER(usera);
+ select nhanvien.maPhong into mPhong from nhanvien where maNV = usera ;
+ mPhong:=LOWER(mPhong);
+ 
+ update phongban
+ set phongban.tenPhong = in_tenphong,
+ phongban.truongPhong= in_truongphong,
+ phongban.ngayNhanChuc= in_ngaynhanchuc,
+ phongban.soNhanVien = in_sonhanvien,
+ phongban.chiNhanh = in_chinhanh
+ where phongban.maPhong=mPhong ;
+end;
+ 
+
+-----------------
+grant execute on update_phong_ban to truongphong
+grant execute on update_phong_ban to truongchinhanh
